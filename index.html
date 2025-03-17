@@ -167,25 +167,57 @@
             </ul>
         </div>
     </section>
-
     <section id="contact" class="contact">
         <div class="container">
             <h2>Contact Us</h2>
             <form>
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
-
+    
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
-
+    
                 <label for="message">Message:</label>
                 <textarea id="message" name="message" rows="6" required></textarea>
-
+    
                 <button type="submit">Send Message</button>
             </form>
+    
+            <div class="social-links">
+                <a href="https://www.linkedin.com/company/logic-link-solutions/?viewAsMember=true" target="_blank" class="social-button linkedin">LinkedIn</a>
+                <a href="https://www.instagram.com/" target="_blank" class="social-button instagram">Instagram</a>
+                <a href="https://www.facebook.com/" target="_blank" class="social-button facebook">Facebook</a>
+            </div>
         </div>
     </section>
-
+    
+    <style>
+        .social-links {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .social-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            margin: 0.5rem;
+            font-size: 1.2rem;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .linkedin {
+            background-color: #0077b5;
+        }
+        .instagram {
+            background-color: #e1306c;
+        }
+        .facebook {
+            background-color: #3b5998;
+        }
+    </style>
+    
     <a href="https://wa.me/917569672112" class="whatsapp-button" target="_blank">Chat with us</a>
 
     <footer>
@@ -195,4 +227,3 @@
     </footer>
 </body>
 </html>
-
