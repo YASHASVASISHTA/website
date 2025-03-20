@@ -5,25 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LogicLink Solutions</title>
     <style>
+        /* General Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            line-height: 1.6;
+            color: #333;
         }
+
         header {
             background-color: #333;
             color: white;
             padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
+
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
         }
+
         h1, h2, h3 {
             text-align: center;
         }
+
         nav ul {
             list-style: none;
             padding: 0;
@@ -31,34 +41,67 @@
             justify-content: center;
             gap: 2rem;
         }
+
         nav a {
             color: white;
             text-decoration: none;
             font-size: 1.2rem;
+            transition: color 0.3s ease;
         }
+
+        nav a:hover {
+            color: #007BFF;
+        }
+
         .hero {
-            background: #f4f4f4;
-            padding: 5rem 0;
+            background: url('alexandre-debieve-FO7JIlwjOtU-unsplash.jpg') no-repeat center center/cover;
+            padding: 8rem 0;
             text-align: center;
+            color: white;
+            animation: fadeIn 2s ease-in-out;
         }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: slideIn 1.5s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            animation: slideIn 2s ease-in-out;
+        }
+
         .about, .services, .contact, .projects, .pricing {
             padding: 4rem 0;
+            background: #f9f9f9;
         }
+
         .services ul, .projects ul {
             list-style: none;
             padding: 0;
             text-align: center;
             font-size: 1.2rem;
         }
+
         .services li, .projects li {
             margin-bottom: 2rem;
         }
+
         .service-details, .project-details, .pricing-details {
-            background: #f9f9f9;
+            background: white;
             padding: 2rem;
             margin-bottom: 2rem;
-            border-left: 5px solid #333;
+            border-left: 5px solid #007BFF;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
+        .service-details:hover, .project-details:hover, .pricing-details:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
         form {
             display: flex;
             flex-direction: column;
@@ -66,22 +109,33 @@
             max-width: 800px;
             margin: 0 auto;
         }
+
         input, textarea, button {
             padding: 1rem;
             font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
+
         button {
-            background-color: #333;
+            background-color: #007BFF;
             color: white;
             border: none;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
         footer {
             background-color: #333;
             color: white;
             text-align: center;
             padding: 2rem 0;
         }
+
         .whatsapp-button {
             position: fixed;
             bottom: 20px;
@@ -94,6 +148,56 @@
             border-radius: 50px;
             cursor: pointer;
             text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .whatsapp-button:hover {
+            background-color: #128c7e;
+        }
+
+        .social-links {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .social-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            margin: 0.5rem;
+            font-size: 1.2rem;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .social-button:hover {
+            transform: scale(1.1);
+        }
+
+        .linkedin {
+            background-color: #0077b5;
+        }
+
+        .instagram {
+            background-color: #e1306c;
+        }
+
+        .facebook {
+            background-color: #3b5998;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
@@ -167,22 +271,23 @@
             </ul>
         </div>
     </section>
+
     <section id="contact" class="contact">
         <div class="container">
             <h2>Contact Us</h2>
             <form>
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
-    
+
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
-    
+
                 <label for="message">Message:</label>
                 <textarea id="message" name="message" rows="6" required></textarea>
-    
+
                 <button type="submit">Send Message</button>
             </form>
-    
+
             <div class="social-links">
                 <a href="https://www.linkedin.com/company/logic-link-solutions/?viewAsMember=true" target="_blank" class="social-button linkedin">LinkedIn</a>
                 <a href="https://www.instagram.com/" target="_blank" class="social-button instagram">Instagram</a>
@@ -190,34 +295,7 @@
             </div>
         </div>
     </section>
-    
-    <style>
-        .social-links {
-            text-align: center;
-            margin-top: 2rem;
-        }
-        .social-button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            margin: 0.5rem;
-            font-size: 1.2rem;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .linkedin {
-            background-color: #0077b5;
-        }
-        .instagram {
-            background-color: #e1306c;
-        }
-        .facebook {
-            background-color: #3b5998;
-        }
-    </style>
-    
+
     <a href="https://wa.me/917569672112" class="whatsapp-button" target="_blank">Chat with us</a>
 
     <footer>
