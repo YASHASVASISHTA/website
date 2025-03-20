@@ -28,10 +28,12 @@
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 1rem;
         }
 
         h1, h2, h3 {
             text-align: center;
+            margin: 0;
         }
 
         nav ul {
@@ -56,25 +58,22 @@
 
         .hero {
             background: url('alexandre-debieve-FO7JIlwjOtU-unsplash.jpg') no-repeat center center/cover;
-            padding: 6rem 1rem;
+            padding: 4rem 1rem;
             text-align: center;
             color: white;
-            animation: fadeIn 2s ease-in-out;
         }
 
         .hero h2 {
             font-size: 2rem;
             margin-bottom: 1rem;
-            animation: slideIn 1.5s ease-in-out;
         }
 
         .hero p {
             font-size: 1.2rem;
-            animation: slideIn 2s ease-in-out;
         }
 
-        .about, .services, .contact, .projects, .pricing {
-            padding: 2rem 1rem;
+        .about, .services, .contact, .projects {
+            padding: 2rem 0;
             background: #f9f9f9;
         }
 
@@ -89,7 +88,7 @@
             margin-bottom: 1.5rem;
         }
 
-        .service-details, .project-details, .pricing-details {
+        .service-details, .project-details {
             background: white;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
@@ -98,7 +97,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .service-details:hover, .project-details:hover, .pricing-details:hover {
+        .service-details:hover, .project-details:hover {
             transform: translateY(-10px);
             box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
         }
@@ -190,21 +189,10 @@
             background-color: #3b5998;
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero {
-                padding: 4rem 1rem;
+                padding: 3rem 1rem;
             }
 
             .hero h2 {
@@ -215,7 +203,7 @@
                 font-size: 1rem;
             }
 
-            .service-details, .project-details, .pricing-details {
+            .service-details, .project-details {
                 padding: 1rem;
             }
 
@@ -244,7 +232,7 @@
                 font-size: 0.9rem;
             }
 
-            .service-details, .project-details, .pricing-details {
+            .service-details, .project-details {
                 padding: 0.8rem;
             }
 
@@ -270,7 +258,6 @@
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#projects">Our Projects</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
