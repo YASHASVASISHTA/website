@@ -1,353 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LogicLink Solutions</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        header {
-            background-color: #333;
-            color: white;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        h1, h2, h3 {
-            text-align: center;
-            margin: 0;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-        }
-
-        nav a:hover {
-            color: #007BFF;
-        }
-
-        .hero {
-            background: url('alexandre-debieve-FO7JIlwjOtU-unsplash.jpg') no-repeat center center/cover;
-            padding: 4rem 1rem;
-            text-align: center;
-            color: white;
-        }
-
-        .hero h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-        }
-
-        .about, .services, .contact, .projects {
-            padding: 2rem 0;
-            background: #f9f9f9;
-        }
-
-        .services ul, .projects ul {
-            list-style: none;
-            padding: 0;
-            text-align: center;
-            font-size: 1rem;
-        }
-
-        .services li, .projects li {
-            margin-bottom: 1.5rem;
-        }
-
-        .service-details, .project-details {
-            background: white;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 5px solid #007BFF;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .service-details:hover, .project-details:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        input, textarea, button {
-            padding: 0.8rem;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 1.5rem 0;
-        }
-
-        .whatsapp-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #25d366;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.2rem;
-            font-size: 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .whatsapp-button:hover {
-            background-color: #128c7e;
-        }
-
-        .social-links {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-
-        .social-button {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
-            margin: 0.5rem;
-            font-size: 1rem;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .social-button:hover {
-            transform: scale(1.1);
-        }
-
-        .linkedin {
-            background-color: #0077b5;
-        }
-
-        .instagram {
-            background-color: #e1306c;
-        }
-
-        .facebook {
-            background-color: #3b5998;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero {
-                padding: 3rem 1rem;
-            }
-
-            .hero h2 {
-                font-size: 1.8rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .service-details, .project-details {
-                padding: 1rem;
-            }
-
-            .social-button {
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
-            }
-
-            .whatsapp-button {
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            nav ul {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .hero h2 {
-                font-size: 1.5rem;
-            }
-
-            .hero p {
-                font-size: 0.9rem;
-            }
-
-            .service-details, .project-details {
-                padding: 0.8rem;
-            }
-
-            .social-button {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.8rem;
-            }
-
-            .whatsapp-button {
-                padding: 0.5rem 0.8rem;
-                font-size: 0.8rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Scanner with Time Validation</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    h1 {
+      color: #333;
+    }
+    
+    #reader {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    
+    #result {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      min-height: 50px;
+      text-align: left;
+      word-break: break-all;
+    }
+    
+    .buttons {
+      margin: 20px 0;
+    }
+    
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    
+    #startButton {
+      background-color: #4CAF50;
+    }
+    
+    #stopButton {
+      background-color: #f44336;
+    }
+    
+    .status {
+      font-style: italic;
+      color: #666;
+    }
+    
+    .success {
+      background-color: #dff0d8;
+      color: #3c763d;
+      border-color: #d6e9c6;
+    }
+    
+    .error {
+      background-color: #f2dede;
+      color: #a94442;
+      border-color: #ebccd1;
+    }
+    
+    #validationResult {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px solid;
+      display: none;
+    }
+    
+    /* Popup styles */
+    #popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #dff0d8;
+      color: #3c763d;
+      border: 1px solid #d6e9c6;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      display: none;
+      text-align: center;
+      font-size: 24px;
+      min-width: 300px;
+    }
+    
+    #scannerContainer {
+      display: block;
+    }
+    
+    .popup-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>LogicLink Solutions</h1>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#projects">Our Projects</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <section id="home" class="hero">
-        <div class="container">
-            <h2>Your Partner in Digital Transformation</h2>
-            <p>We build innovative software solutions for businesses — schools, shops, and all enterprises looking for digital excellence.</p>
-        </div>
-    </section>
-
-    <section id="about" class="about">
-        <div class="container">
-            <h2>About Us</h2>
-            <p>LogicLink Solutions is dedicated to developing cutting-edge mobile apps and websites tailored to meet the specific needs of businesses. From simple websites for local shops to complex apps for schools, we deliver solutions that empower our clients to thrive in a digital world.</p>
-        </div>
-    </section>
-
-    <section id="services" class="services">
-        <div class="container">
-            <h2>Our Services</h2>
-            <ul>
-                <li>
-                    <div class="service-details">
-                        <h3>Custom Mobile App Development</h3>
-                        <p>We create fully customized mobile apps for Android and iOS, helping businesses enhance user experiences and streamline operations.</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="service-details">
-                        <h3>Website Design and Development</h3>
-                        <p>From elegant landing pages to robust e-commerce websites, we design and build responsive, user-friendly sites tailored to your brand.</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="service-details">
-                        <h3>Business Software Solutions</h3>
-                        <p>Need custom software for inventory management, CRM, or internal tools? We build solutions to streamline your operations.</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2>Our Projects</h2>
-            <ul>
-                <li>
-                    <div class="project-details">
-                        <h3>LogicLink School App</h3>
-                        <p>A comprehensive school management app featuring student and teacher logins, classroom chats, attendance tracking via QR codes, and admin announcements.</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <form>
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" rows="6" required></textarea>
-
-                <button type="submit">Send Message</button>
-            </form>
-
-            <div class="social-links">
-                <a href="https://www.linkedin.com/company/logic-link-solutions/?viewAsMember=true" target="_blank" class="social-button linkedin">LinkedIn</a>
-                <a href="https://www.instagram.com/" target="_blank" class="social-button instagram">Instagram</a>
-                <a href="https://www.facebook.com/" target="_blank" class="social-button facebook">Facebook</a>
-            </div>
-        </div>
-    </section>
-
-    <a href="https://wa.me/917569672112" class="whatsapp-button" target="_blank">Chat with us</a>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 LogicLink Solutions. All Rights Reserved.</p>
-        </div>
-    </footer>
+  <h1>QR Code Scanner with Time Validation</h1>
+  <p>Scan a QR code to Checkin</p>
+  
+  <div id="scannerContainer">
+    <div class="buttons">
+      <button id="startButton">Start Scanner</button>
+      <button id="stopButton" disabled>Stop Scanner</button>
+    </div>
+    
+    <div id="reader"></div>
+    
+    <div>
+      <h2>Result:</h2>
+      <p class="status" id="status">No QR code detected yet</p>
+      <div id="result"></div>
+    </div>
+    
+    <div id="validationResult"></div>
+  </div>
+  
+  <!-- Success Popup -->
+  <div id="popup">
+    <div class="popup-icon">✓</div>
+    <div>SUCCESS!</div>
+    <div>Valid QR Code Detected</div>
+  </div>
+  
+  <script>
+    const html5QrCode = new Html5Qrcode("reader");
+    const popup = document.getElementById('popup');
+    const scannerContainer = document.getElementById('scannerContainer');
+    
+    // Function to extract date/time from QR code content
+    function extractDateTime(text) {
+      // Try to find date patterns in the text
+      // Common formats: YYYY-MM-DD HH:MM:SS, MM/DD/YYYY HH:MM:SS, etc.
+      
+      // ISO format: YYYY-MM-DDTHH:MM:SS
+      const isoPattern = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
+      
+      // Standard date format: YYYY-MM-DD HH:MM:SS
+      const standardPattern = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/;
+      
+      // MM/DD/YYYY HH:MM:SS
+      const usPattern = /\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}:\d{2}/;
+      
+      // DD/MM/YYYY HH:MM:SS
+      const euPattern = /\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}:\d{2}/;
+      
+      // Unix timestamp (seconds since epoch)
+      const unixPattern = /^\d{10}$/;
+      
+      // Unix timestamp milliseconds
+      const unixMsPattern = /^\d{13}$/;
+      
+      // Time only HH:MM:SS
+      const timePattern = /\d{1,2}:\d{2}:\d{2}/;
+      
+      let dateTimeStr = null;
+      let extractedDate = null;
+      
+      if (isoPattern.test(text)) {
+        dateTimeStr = text.match(isoPattern)[0];
+        extractedDate = new Date(dateTimeStr);
+      } else if (standardPattern.test(text)) {
+        dateTimeStr = text.match(standardPattern)[0];
+        extractedDate = new Date(dateTimeStr);
+      } else if (usPattern.test(text)) {
+        dateTimeStr = text.match(usPattern)[0];
+        const parts = dateTimeStr.split(' ');
+        const dateParts = parts[0].split('/');
+        extractedDate = new Date(`${dateParts[2]}-${dateParts[0]}-${dateParts[1]} ${parts[1]}`);
+      } else if (euPattern.test(text)) {
+        dateTimeStr = text.match(euPattern)[0];
+        const parts = dateTimeStr.split(' ');
+        const dateParts = parts[0].split('/');
+        extractedDate = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]} ${parts[1]}`);
+      } else if (unixPattern.test(text)) {
+        const timestamp = parseInt(text) * 1000; // Convert to milliseconds
+        extractedDate = new Date(timestamp);
+      } else if (unixMsPattern.test(text)) {
+        const timestamp = parseInt(text);
+        extractedDate = new Date(timestamp);
+      } else if (timePattern.test(text)) {
+        // For time only, use today's date
+        const timeStr = text.match(timePattern)[0];
+        const today = new Date();
+        const [hours, minutes, seconds] = timeStr.split(':').map(Number);
+        today.setHours(hours, minutes, seconds);
+        extractedDate = today;
+      } else {
+        // Try to parse the entire text as a date
+        const possibleDate = new Date(text);
+        if (!isNaN(possibleDate.getTime())) {
+          extractedDate = possibleDate;
+        }
+      }
+      
+      return extractedDate;
+    }
+    
+    // Function to validate if the timestamp is within 1 minute of current time
+    function validateTimestamp(scannedDate) {
+      if (!scannedDate) return false;
+      
+      const currentTime = new Date();
+      const timeDifference = Math.abs(currentTime - scannedDate); // Difference in milliseconds
+      const oneMinuteInMs = 60 * 1000; // 1 minute in milliseconds
+      
+      return timeDifference <= oneMinuteInMs;
+    }
+    
+    // Function to show popup for 5 seconds then return to camera
+    function showSuccessPopup() {
+      // Show popup
+      popup.style.display = 'block';
+      scannerContainer.style.display = 'none';
+      
+      // After 5 seconds, hide popup and resume scanner
+      setTimeout(() => {
+        popup.style.display = 'none';
+        scannerContainer.style.display = 'block';
+        
+        // If scanning was stopped while popup was showing, don't auto-restart
+        if (!startButton.disabled) {
+          startScanner();
+        }
+      }, 5000);
+    }
+    
+    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+      document.getElementById('result').textContent = decodedText;
+      
+      // Extract date/time from QR code
+      const extractedDate = extractDateTime(decodedText);
+      const validationResult = document.getElementById('validationResult');
+      validationResult.style.display = 'block';
+      
+      if (extractedDate) {
+        const isValid = validateTimestamp(extractedDate);
+        
+        if (isValid) {
+          validationResult.className = 'success';
+          validationResult.innerHTML = `
+            <strong>SUCCESS!</strong><br>
+            Detected time is within 1 minute of current time.<br>
+            QR Code time: ${extractedDate.toLocaleString()}<br>
+            Current time: ${new Date().toLocaleString()}
+          `;
+          
+          // Stop the scanner temporarily while showing the popup
+          html5QrCode.stop().then(() => {
+            startButton.disabled = false;
+            stopButton.disabled = true;
+            // Show success popup for 5 seconds
+            showSuccessPopup();
+          });
+          
+        } else {
+          validationResult.className = 'error';
+          validationResult.innerHTML = `
+            <strong>ERROR!</strong><br>
+            Time difference <br>
+            QR Code time: ${extractedDate.toLocaleString()}<br>
+            Current time: ${new Date().toLocaleString()}<br>
+            Please scan a QR code with a current timestamp.
+          `;
+        }
+      } else {
+        validationResult.className = 'error';
+        validationResult.innerHTML = `
+          <strong>ERROR!</strong><br>
+          No valid timestamp found in QR code.<br>
+          Please scan a QR code containing a date/time.
+        `;
+      }
+      
+      document.getElementById('status').textContent = "QR code processed!";
+    };
+    
+    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    
+    // Buttons
+    const startButton = document.getElementById('startButton');
+    const stopButton = document.getElementById('stopButton');
+    
+    function startScanner() {
+      html5QrCode.start(
+        { facingMode: "environment" }, 
+        config,
+        qrCodeSuccessCallback
+      ).then(() => {
+        startButton.disabled = true;
+        stopButton.disabled = false;
+        document.getElementById('status').textContent = "Scanner started. Point camera at a QR code.";
+        document.getElementById('validationResult').style.display = 'none';
+      }).catch((err) => {
+        document.getElementById('status').textContent = `Error starting scanner: ${err}`;
+      });
+    }
+    
+    startButton.addEventListener('click', startScanner);
+    
+    stopButton.addEventListener('click', () => {
+      html5QrCode.stop().then(() => {
+        startButton.disabled = false;
+        stopButton.disabled = true;
+        document.getElementById('status').textContent = "Scanner stopped.";
+      }).catch((err) => {
+        document.getElementById('status').textContent = `Error stopping scanner: ${err}`;
+      });
+    });
+  </script>
 </body>
 </html>
