@@ -1,340 +1,857 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR Code Scanner with Time Validation</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      text-align: center;
-    }
-    
-    h1 {
-      color: #333;
-    }
-    
-    #reader {
-      width: 100%;
-      max-width: 500px;
-      margin: 0 auto;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-    
-    #result {
-      margin: 20px 0;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-      min-height: 50px;
-      text-align: left;
-      word-break: break-all;
-    }
-    
-    .buttons {
-      margin: 20px 0;
-    }
-    
-    button {
-      background-color: #4CAF50;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    
-    button:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
-    }
-    
-    #startButton {
-      background-color: #4CAF50;
-    }
-    
-    #stopButton {
-      background-color: #f44336;
-    }
-    
-    .status {
-      font-style: italic;
-      color: #666;
-    }
-    
-    .success {
-      background-color: #dff0d8;
-      color: #3c763d;
-      border-color: #d6e9c6;
-    }
-    
-    .error {
-      background-color: #f2dede;
-      color: #a94442;
-      border-color: #ebccd1;
-    }
-    
-    #validationResult {
-      margin: 20px 0;
-      padding: 15px;
-      border-radius: 5px;
-      border: 1px solid;
-      display: none;
-    }
-    
-    /* Popup styles */
-    #popup {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #dff0d8;
-      color: #3c763d;
-      border: 1px solid #d6e9c6;
-      border-radius: 5px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      z-index: 999;
-      display: none;
-      text-align: center;
-      font-size: 24px;
-      min-width: 300px;
-    }
-    
-    #scannerContainer {
-      display: block;
-    }
-    
-    .popup-icon {
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeosTech Solutions - Innovative Software Solutions</title>
+    <style>
+        :root {
+            --primary: #6e42ff;
+            --secondary: #00c2ff;
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --card-bg: #1e1e1e;
+            --text: #f5f5f5;
+            --text-secondary: #b3b3b3;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--darker-bg);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            margin-left: 10px;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+        
+        .logo span {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(110, 66, 255, 0.4);
+        }
+        
+        .hero {
+            position: relative;
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(rgba(10, 10, 10, 0.8), rgba(18, 18, 18, 0.9)), url('/api/placeholder/1200/800') center/cover no-repeat;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(110, 66, 255, 0.1) 0%, rgba(0, 194, 255, 0.05) 100%);
+            clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(30, 30, 30, 0.9), rgba(30, 30, 30, 0.95)), url('/api/placeholder/400/300') center/cover no-repeat;
+            z-index: -1;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-card p {
+            color: var(--text-secondary);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .about-image-container {
+            width: 100%;
+            height: 350px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 250px;
+            background-color: var(--card-bg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+        
+        .portfolio-overlay h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .portfolio-overlay a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .contact-form {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--dark-bg);
+            border: 1px solid #333;
+            color: var(--text);
+            border-radius: 5px;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
+        
+        footer {
+            background-color: var(--darker-bg);
+            padding: 3rem 0;
+            background: linear-gradient(rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.98)), url('/api/placeholder/1200/400') center/cover no-repeat;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-col h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--card-bg);
+            border-radius: 50%;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            margin-top: 3rem;
+            text-align: center;
+            color: var(--text-secondary);
+            padding-top: 1.5rem;
+            border-top: 1px solid #333;
+        }
+        
+        .stats-container {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 4rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .stat-item {
+            padding: 1.5rem;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .stat-text {
+            color: var(--text-secondary);
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .tech-item {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 110px;
+            transition: transform 0.3s;
+        }
+        
+        .tech-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .tech-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .tech-name {
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .testimonials {
+            padding: 5rem 0;
+            background: linear-gradient(rgba(18, 18, 18, 0.97), rgba(18, 18, 18, 0.97)), url('/api/placeholder/1200/800') center/cover no-repeat;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .testimonial-text {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .testimonial-text::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -10px;
+            font-size: 3rem;
+            color: var(--primary);
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            overflow: hidden;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 0.2rem;
+        }
+        
+        .author-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .code-section {
+            position: relative;
+            padding: 2rem;
+            border-radius: 10px;
+            background-color: var(--card-bg);
+            margin-top: 3rem;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .code-dots {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .dot-red {
+            background-color: #ff5f57;
+        }
+        
+        .dot-yellow {
+            background-color: #febc2e;
+        }
+        
+        .dot-green {
+            background-color: #28c840;
+        }
+        
+        .code-content {
+            background-color: #1a1a1a;
+            padding: 1.5rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+        
+        .code-content .comment {
+            color: #6a9955;
+        }
+        
+        .code-content .keyword {
+            color: #569cd6;
+        }
+        
+        .code-content .string {
+            color: #ce9178;
+        }
+        
+        .code-content .function {
+            color: #dcdcaa;
+        }
+        
+        .code-content .variable {
+            color: #9cdcfe;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .code-content {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
 </head>
 <body>
-  <h1>QR Code Scanner with Time Validation</h1>
-  <p>Scan a QR code to Checkin</p>
-  
-  <div id="scannerContainer">
-    <div class="buttons">
-      <button id="startButton">Start Scanner</button>
-      <button id="stopButton" disabled>Stop Scanner</button>
-    </div>
-    
-    <div id="reader"></div>
-    
-    <div>
-      <h2>Result:</h2>
-      <p class="status" id="status">No QR code detected yet</p>
-      <div id="result"></div>
-    </div>
-    
-    <div id="validationResult"></div>
-  </div>
-  
-  <!-- Success Popup -->
-  <div id="popup">
-    <div class="popup-icon">✓</div>
-    <div>SUCCESS!</div>
-    <div>Valid QR Code Detected</div>
-  </div>
-  
-  <script>
-    const html5QrCode = new Html5Qrcode("reader");
-    const popup = document.getElementById('popup');
-    const scannerContainer = document.getElementById('scannerContainer');
-    
-    // Function to extract date/time from QR code content
-    function extractDateTime(text) {
-      // Try to find date patterns in the text
-      // Common formats: YYYY-MM-DD HH:MM:SS, MM/DD/YYYY HH:MM:SS, etc.
-      
-      // ISO format: YYYY-MM-DDTHH:MM:SS
-      const isoPattern = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
-      
-      // Standard date format: YYYY-MM-DD HH:MM:SS
-      const standardPattern = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/;
-      
-      // MM/DD/YYYY HH:MM:SS
-      const usPattern = /\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}:\d{2}/;
-      
-      // DD/MM/YYYY HH:MM:SS
-      const euPattern = /\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}:\d{2}/;
-      
-      // Unix timestamp (seconds since epoch)
-      const unixPattern = /^\d{10}$/;
-      
-      // Unix timestamp milliseconds
-      const unixMsPattern = /^\d{13}$/;
-      
-      // Time only HH:MM:SS
-      const timePattern = /\d{1,2}:\d{2}:\d{2}/;
-      
-      let dateTimeStr = null;
-      let extractedDate = null;
-      
-      if (isoPattern.test(text)) {
-        dateTimeStr = text.match(isoPattern)[0];
-        extractedDate = new Date(dateTimeStr);
-      } else if (standardPattern.test(text)) {
-        dateTimeStr = text.match(standardPattern)[0];
-        extractedDate = new Date(dateTimeStr);
-      } else if (usPattern.test(text)) {
-        dateTimeStr = text.match(usPattern)[0];
-        const parts = dateTimeStr.split(' ');
-        const dateParts = parts[0].split('/');
-        extractedDate = new Date(`${dateParts[2]}-${dateParts[0]}-${dateParts[1]} ${parts[1]}`);
-      } else if (euPattern.test(text)) {
-        dateTimeStr = text.match(euPattern)[0];
-        const parts = dateTimeStr.split(' ');
-        const dateParts = parts[0].split('/');
-        extractedDate = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]} ${parts[1]}`);
-      } else if (unixPattern.test(text)) {
-        const timestamp = parseInt(text) * 1000; // Convert to milliseconds
-        extractedDate = new Date(timestamp);
-      } else if (unixMsPattern.test(text)) {
-        const timestamp = parseInt(text);
-        extractedDate = new Date(timestamp);
-      } else if (timePattern.test(text)) {
-        // For time only, use today's date
-        const timeStr = text.match(timePattern)[0];
-        const today = new Date();
-        const [hours, minutes, seconds] = timeStr.split(':').map(Number);
-        today.setHours(hours, minutes, seconds);
-        extractedDate = today;
-      } else {
-        // Try to parse the entire text as a date
-        const possibleDate = new Date(text);
-        if (!isNaN(possibleDate.getTime())) {
-          extractedDate = possibleDate;
-        }
-      }
-      
-      return extractedDate;
-    }
-    
-    // Function to validate if the timestamp is within 1 minute of current time
-    function validateTimestamp(scannedDate) {
-      if (!scannedDate) return false;
-      
-      const currentTime = new Date();
-      const timeDifference = Math.abs(currentTime - scannedDate); // Difference in milliseconds
-      const oneMinuteInMs = 60 * 1000; // 1 minute in milliseconds
-      
-      return timeDifference <= oneMinuteInMs;
-    }
-    
-    // Function to show popup for 5 seconds then return to camera
-    function showSuccessPopup() {
-      // Show popup
-      popup.style.display = 'block';
-      scannerContainer.style.display = 'none';
-      
-      // After 5 seconds, hide popup and resume scanner
-      setTimeout(() => {
-        popup.style.display = 'none';
-        scannerContainer.style.display = 'block';
-        
-        // If scanning was stopped while popup was showing, don't auto-restart
-        if (!startButton.disabled) {
-          startScanner();
-        }
-      }, 5000);
-    }
-    
-    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-      document.getElementById('result').textContent = decodedText;
-      
-      // Extract date/time from QR code
-      const extractedDate = extractDateTime(decodedText);
-      const validationResult = document.getElementById('validationResult');
-      validationResult.style.display = 'block';
-      
-      if (extractedDate) {
-        const isValid = validateTimestamp(extractedDate);
-        
-        if (isValid) {
-          validationResult.className = 'success';
-          validationResult.innerHTML = `
-            <strong>SUCCESS!</strong><br>
-            Detected time is within 1 minute of current time.<br>
-            QR Code time: ${extractedDate.toLocaleString()}<br>
-            Current time: ${new Date().toLocaleString()}
-          `;
-          
-          // Stop the scanner temporarily while showing the popup
-          html5QrCode.stop().then(() => {
-            startButton.disabled = false;
-            stopButton.disabled = true;
-            // Show success popup for 5 seconds
-            showSuccessPopup();
-          });
-          
-        } else {
-          validationResult.className = 'error';
-          validationResult.innerHTML = `
-            <strong>ERROR!</strong><br>
-            Time difference <br>
-            QR Code time: ${extractedDate.toLocaleString()}<br>
-            Current time: ${new Date().toLocaleString()}<br>
-            Please scan a QR code with a current timestamp.
-          `;
-        }
-      } else {
-        validationResult.className = 'error';
-        validationResult.innerHTML = `
-          <strong>ERROR!</strong><br>
-          No valid timestamp found in QR code.<br>
-          Please scan a QR code containing a date/time.
-        `;
-      }
-      
-      document.getElementById('status').textContent = "QR code processed!";
-    };
-    
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-    
-    // Buttons
-    const startButton = document.getElementById('startButton');
-    const stopButton = document.getElementById('stopButton');
-    
-    function startScanner() {
-      html5QrCode.start(
-        { facingMode: "environment" }, 
-        config,
-        qrCodeSuccessCallback
-      ).then(() => {
-        startButton.disabled = true;
-        stopButton.disabled = false;
-        document.getElementById('status').textContent = "Scanner started. Point camera at a QR code.";
-        document.getElementById('validationResult').style.display = 'none';
-      }).catch((err) => {
-        document.getElementById('status').textContent = `Error starting scanner: ${err}`;
-      });
-    }
-    
-    startButton.addEventListener('click', startScanner);
-    
-    stopButton.addEventListener('click', () => {
-      html5QrCode.stop().then(() => {
-        startButton.disabled = false;
-        stopButton.disabled = true;
-        document.getElementById('status').textContent = "Scanner stopped.";
-      }).catch((err) => {
-        document.getElementById('status').textContent = `Error stopping scanner: ${err}`;
-      });
-    });
-  </script>
-</body>
-</html>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1><span>NeosTech</span> Solutions</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a href="#contact" class="btn">Get in Touch</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Innovative Software Solutions for Tomorrow's Challenges</h2>
+                <p>NeosTech Solutions delivers cutting-edge software development services to transform your business and drive digital innovation.</p>
+                <a href="#services" class="btn">Explore Our Services</a>
+            </div>
+        </div>
+        <div class="hero-bg"></div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>Comprehensive software solutions tailored to your business needs</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Custom Software Development</h3>
+                    <p>Tailored software solutions designed to address your specific business challenges and requirements.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile App Development</h3>
+                    <p>Native and cross-platform mobile applications that deliver exceptional user experiences.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Web Development</h3>
+                    <p>Modern, responsive websites and web applications built with cutting-edge technologies.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Cloud Solutions</h3>
+                    <p>Scalable cloud infrastructure and migration services to optimize your business operations.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Database Management</h3>
+                    <p>Efficient database design, optimization, and management for improved performance.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Cybersecurity</h3>
+                    <p>Comprehensive security solutions to protect your software and data from evolving threats.</p>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">250+</div>
+                        <div class="stat-text">Projects Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">120+</div>
+                        <div class="stat-text">Satisfied Clients</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-text">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">30+</div>
+                        <div class="stat-text">Expert Developers</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-title" style="margin-top: 4rem;">
+                <h3>Technologies We Work With</h3>
+            </div>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <i class="fab fa-react tech-icon" style="color: #61DBFB;"></i>
+                    <div class="tech-name">React</div>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-node tech-icon" style="color: #3C873A;"></i>
+                    <div class="tech-name">Node.js</div>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-angular tech-icon" style="color: #DD0031;"></i>
+                    <div class="tech-name">Angular</div>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-vuejs tech-icon" style="color: #41B883;"></i>
+                    <div class="tech-name">Vue.js</div>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-python tech-icon" style="color: #306998;"></i>
+                    <div class="tech-name">Python</div>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-java tech-icon" style="color: #f89820;"></i>
+                    <div class="tech-name">Java</div>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-swift tech-icon" style="color: #F05138;"></i>
+                    <div class="tech-name">Swift</div>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-android tech-icon" style="color: #3DDC84;"></i>
+                    <div class="tech-name">Android</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Us</h2>
+                <p>Learn more about NeosTech Solutions</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Driving Digital Transformation</h3>
+                    <p>At NeosTech Solutions, we are passionate about leveraging technology to solve complex business challenges. Founded in 2018, we've grown into a team of dedicated professionals committed to delivering exceptional software solutions.</p>
+                    <p>Our mission is to empower businesses through innovative technology solutions that drive growth, improve efficiency, and create competitive advantages in an increasingly digital world.</p>
+                    <p>With a team of experienced developers, designers, and consultants, we bring a wealth of expertise across various industries and technologies to every project we undertake.</p>
+                    <a href="#contact" class="btn" style="margin-top: 20px;">Get to Know Us</a>
+                    
+                    <div class="code-section">
+                        <div class="code-dots">
+                            <span class="dot dot-red"></span>
+                            <span class="dot dot-yellow"></span>
+                            <span class="dot dot-green"></span>
+                        </div>
+                        <div class="code-content">
+                            <span class="comment">// Our approach to software development</span><br>
+                            <span class="keyword">function</span> <span class="function">neostechSolution</span>(<span class="variable">clientRequirements</span>) {<br>
+                            &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">team</span> = <span class="function">assembleExpertTeam</span>(<span class="variable">clientRequirements</span>);<br>
+                            &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">strategy</span> = <span class="function">developCustomStrategy</span>(<span class="variable">clientRequirements</span>);<br>
+                            <br>
+                            &nbsp;&nbsp;<span class="comment">// Agile development process</span><br>
+                            &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">solution</span> = <span class="function">implementAgileMethodology</span>({<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;planning: <span class="function">thoroughRequirementsAnalysis</span>(),<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;development: <span class="function">cuttingEdgeTechnologyStack</span>(),<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;testing: <span class="function">comprehensiveQualityAssurance</span>(),<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;deployment: <span class="function">seamlessIntegration</span>(),<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;maintenance: <span class="function">ongoingSupport</span>()<br>
+                            &nbsp;&nbsp;});<br>
+                            <br>
+                            &nbsp;&nbsp;<span class="keyword">return</span> {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;customSoftware: <span class="variable">solution</span>,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;clientSatisfaction: <span class="string">"100%"</span>,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;deliveredOnTime: <span class="keyword">true</span>,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;support: <span class="string">"24/7"</span><br>
+                            &nbsp;&nbsp;};<br>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="about-image-container">
+                        <img src="/api/placeholder/600/350" alt="NeosTech Team" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Portfolio</h2>
+                <p>Explore our recent projects</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/320" alt="E-Commerce Platform" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="portfolio-overlay">
+                        <h3>E-Commerce Platform</h3>
+                        <p>A scalable e-commerce solution with integrated payment systems.</p>
+                        <a href="#" class="portfolio-link">View Project</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/320" alt="HealthTech Mobile App" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="portfolio-overlay">
+                        <h3>HealthTech Mobile App</h3>
+                        <p>Patient management system with telemedicine capabilities.</p>
+                        <a href="#" class="portfolio-link">View Project</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/320" alt="Financial Analytics Dashboard" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="portfolio-overlay">
+                        <h3>Financial Analytics Dashboard</h3>
+                        <p>Real-time data visualization platform for financial institutions.</p>
+                        <a href="#" class="portfolio-link">View Project</a>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/400/320" alt="Supply Chain Management System" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div class="portfolio-overlay">
+                        <h3>Supply Chain Management System</h3>
+                        <p>End-to-end logistics tracking and management solution.</p>
+                        <a href="#" class="portfolio-link">View Project</a>
+                    </div>
+                </div>
