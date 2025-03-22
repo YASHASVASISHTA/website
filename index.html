@@ -26,11 +26,12 @@
             background-color: var(--dark-bg);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         header {
             background-color: var(--darker-bg);
-            padding: 1.5rem 0;
+            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -38,9 +39,9 @@
         }
         
         .container {
-            width: 90%;
-            max-width: 1200px;
+            width: 92%;
             margin: 0 auto;
+            padding: 0 10px;
         }
         
         nav {
@@ -55,9 +56,9 @@
         }
         
         .logo h1 {
-            margin-left: 10px;
+            margin-left: 5px;
             font-weight: 700;
-            font-size: 1.8rem;
+            font-size: 1.3rem;
         }
         
         .logo span {
@@ -68,36 +69,89 @@
         }
         
         .nav-links {
-            display: flex;
+            display: none;
             list-style: none;
         }
         
-        .nav-links li {
-            margin-left: 2rem;
+        .mobile-menu-btn {
+            cursor: pointer;
+            display: block;
+            z-index: 200;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
         }
         
-        .nav-links a {
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            height: 100vh;
+            background-color: var(--darker-bg);
+            padding-top: 80px;
+            transition: left 0.3s ease;
+            z-index: 100;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .mobile-nav.active {
+            left: 0;
+        }
+        
+        .mobile-nav-links {
+            list-style: none;
+        }
+        
+        .mobile-nav-links li {
+            margin: 1.5rem 0;
+            padding: 0 2rem;
+        }
+        
+        .mobile-nav-links a {
             color: var(--text);
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
+            font-size: 1.2rem;
+            display: block;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .nav-links a:hover {
-            color: var(--secondary);
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 90;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
         
         .btn {
             display: inline-block;
-            padding: 0.8rem 1.5rem;
+            padding: 0.7rem 1.2rem;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
             border: none;
             border-radius: 5px;
             font-weight: 500;
+            font-size: 0.9rem;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s;
+        }
+        
+        .desktop-btn {
+            display: none;
         }
         
         .btn:hover {
@@ -107,53 +161,43 @@
         
         .hero {
             position: relative;
-            height: 85vh;
+            height: 90vh;
             display: flex;
             align-items: center;
-            overflow: hidden;
             background: linear-gradient(rgba(10, 10, 10, 0.8), rgba(18, 18, 18, 0.9)), url('https://source.unsplash.com/1200x800/?technology,software') center/cover no-repeat;
         }
         
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 600px;
+            text-align: center;
+            padding: 0 20px;
         }
         
         .hero h2 {
-            font-size: 3rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
             line-height: 1.2;
         }
         
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 2rem;
             color: var(--text-secondary);
         }
         
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 50%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(110, 66, 255, 0.1) 0%, rgba(0, 194, 255, 0.05) 100%);
-            clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
-        }
-        
         section {
-            padding: 5rem 0;
+            padding: 3rem 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
         
         .section-title h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
             position: relative;
             display: inline-block;
         }
@@ -169,16 +213,20 @@
             background: linear-gradient(to right, var(--primary), var(--secondary));
         }
         
+        .section-title p {
+            color: var(--text-secondary);
+        }
+        
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
         }
         
         .service-card {
             background-color: var(--card-bg);
             border-radius: 10px;
-            padding: 2rem;
+            padding: 1.5rem;
             transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
             overflow: hidden;
@@ -196,236 +244,47 @@
         }
         
         .service-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
         
         .service-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            margin-bottom: 1rem;
             color: var(--primary);
         }
         
         .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
         }
         
         .service-card p {
             color: var(--text-secondary);
-        }
-        
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 4rem;
-        }
-        
-        .about-text {
-            flex: 1;
-        }
-        
-        .about-image {
-            flex: 1;
-            position: relative;
-        }
-        
-        .about-image-container {
-            width: 100%;
-            height: 350px;
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .portfolio-item {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            height: 250px;
-            background-color: var(--card-bg);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .portfolio-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1.5rem;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            transform: translateY(100%);
-            transition: transform 0.3s;
-        }
-        
-        .portfolio-item:hover .portfolio-overlay {
-            transform: translateY(0);
-        }
-        
-        .portfolio-overlay h3 {
-            margin-bottom: 0.5rem;
-        }
-        
-        .portfolio-overlay a {
-            color: var(--secondary);
-            text-decoration: none;
-        }
-        
-        .contact-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-        }
-        
-        .contact-form {
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.8rem;
-            background-color: var(--dark-bg);
-            border: 1px solid #333;
-            color: var(--text);
-            border-radius: 5px;
-        }
-        
-        .form-group textarea {
-            height: 150px;
-            resize: vertical;
-        }
-        
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            margin-right: 1rem;
-        }
-        
-        footer {
-            background-color: var(--darker-bg);
-            padding: 3rem 0;
-            background: linear-gradient(rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.98)), url('https://source.unsplash.com/1200x400/?technology,software') center/cover no-repeat;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-        }
-        
-        .footer-col h4 {
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--secondary);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .social-links a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 40px;
-            height: 40px;
-            background-color: var(--card-bg);
-            border-radius: 50%;
-            color: var(--text);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .social-links a:hover {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            transform: translateY(-5px);
-        }
-        
-        .copyright {
-            margin-top: 3rem;
-            text-align: center;
-            color: var(--text-secondary);
-            padding-top: 1.5rem;
-            border-top: 1px solid #333;
+            font-size: 0.95rem;
         }
         
         .stats-container {
             background-color: var(--card-bg);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 10px;
-            margin-top: 4rem;
+            margin-top: 3rem;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
             text-align: center;
         }
         
         .stat-item {
-            padding: 1.5rem;
+            padding: 1rem;
         }
         
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
             background: linear-gradient(to right, var(--primary), var(--secondary));
@@ -436,106 +295,63 @@
         
         .stat-text {
             color: var(--text-secondary);
+            font-size: 0.9rem;
         }
         
         .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
         }
         
         .tech-item {
             background-color: var(--card-bg);
-            padding: 1rem;
-            border-radius: 10px;
+            padding: 0.8rem 0.4rem;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 110px;
             transition: transform 0.3s;
         }
         
         .tech-item:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
         }
         
         .tech-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 0.6rem;
         }
         
         .tech-name {
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.7rem;
         }
         
-        .testimonials {
-            padding: 5rem 0;
-            background: linear-gradient(rgba(18, 18, 18, 0.97), rgba(18, 18, 18, 0.97)), url('https://source.unsplash.com/1200x800/?technology,software') center/cover no-repeat;
-        }
-        
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        .about-content {
+            display: flex;
+            flex-direction: column;
             gap: 2rem;
         }
         
-        .testimonial-card {
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        .about-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
         
-        .testimonial-text {
-            margin-bottom: 1.5rem;
-            font-style: italic;
-            position: relative;
-            padding-left: 2rem;
-        }
-        
-        .testimonial-text::before {
-            content: '"';
-            position: absolute;
-            left: 0;
-            top: -10px;
-            font-size: 3rem;
-            color: var(--primary);
-            font-family: Georgia, serif;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-        }
-        
-        .author-image {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 1rem;
-            overflow: hidden;
-        }
-        
-        .author-info h4 {
-            margin-bottom: 0.2rem;
-        }
-        
-        .author-info p {
+        .about-text p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
         }
         
         .code-section {
             position: relative;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 10px;
             background-color: var(--card-bg);
-            margin-top: 3rem;
+            margin-top: 2rem;
             overflow: hidden;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
@@ -543,12 +359,12 @@
         .code-dots {
             display: flex;
             gap: 0.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         
         .dot {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
         }
         
@@ -566,11 +382,12 @@
         
         .code-content {
             background-color: #1a1a1a;
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-radius: 5px;
             font-family: 'Courier New', monospace;
-            line-height: 1.6;
+            line-height: 1.5;
             overflow-x: auto;
+            font-size: 0.8rem;
         }
         
         .code-content .comment {
@@ -593,23 +410,282 @@
             color: #9cdcfe;
         }
         
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+        .about-image-container {
+            width: 100%;
+            height: 250px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 220px;
+            background-color: var(--card-bg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.2rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            transform: translateY(0);
+        }
+        
+        .portfolio-overlay h3 {
+            margin-bottom: 0.4rem;
+            font-size: 1.2rem;
+        }
+        
+        .portfolio-overlay p {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .portfolio-overlay a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .testimonials {
+            padding: 3rem 0;
+            background: linear-gradient(rgba(18, 18, 18, 0.97), rgba(18, 18, 18, 0.97)), url('https://source.unsplash.com/1200x800/?technology,software') center/cover no-repeat;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        .testimonial-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .testimonial-text {
+            margin-bottom: 1.2rem;
+            font-style: italic;
+            position: relative;
+            padding-left: 1.8rem;
+            font-size: 0.95rem;
+        }
+        
+        .testimonial-text::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -8px;
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            overflow: hidden;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 0.2rem;
+            font-size: 1rem;
+        }
+        
+        .author-info p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .contact-form {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--dark-bg);
+            border: 1px solid #333;
+            color: var(--text);
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+        
+        .contact-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin-right: 0.8rem;
+            font-size: 0.9rem;
+        }
+        
+        .contact-item h4 {
+            margin-bottom: 0.2rem;
+            font-size: 1rem;
+        }
+        
+        .contact-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            background-color: var(--darker-bg);
+            padding: 2.5rem 0 1.5rem;
+            background: linear-gradient(rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.98)), url('https://source.unsplash.com/1200x400/?technology,software') center/cover no-repeat;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .footer-col h4 {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.7rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            background-color: var(--card-bg);
+            border-radius: 50%;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .social-links a:hover {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            padding-top: 1.2rem;
+            border-top: 1px solid #333;
+            font-size: 0.8rem;
+        }
+        
+        /* For larger mobile screens and tablets */
+        @media (min-width: 480px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .hero h2 {
-                font-size: 2.5rem;
+            .tech-stack {
+                grid-template-columns: repeat(4, 1fr);
             }
             
-            .about-content {
-                flex-direction: column;
-                gap: 2rem;
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .code-content {
-                font-size: 0.9rem;
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
             }
+        }
+        
+        /* For desktop screens - hiding these styles intentionally */
+        @media (min-width: 992px) {
+            /* Desktop styles are intentionally removed since we're focusing on mobile */
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
@@ -622,29 +698,37 @@
                 <div class="logo">
                     <h1><span>LogicLink</span> Solutions</h1>
                 </div>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <a href="#contact" class="btn">Get in Touch</a>
+                <button class="mobile-menu-btn" id="menuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="#contact" class="btn desktop-btn">Get in Touch</a>
             </nav>
         </div>
     </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#contact" class="btn">Get in Touch</a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay"></div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
-                <h2>Innovative Software Solutions for Tomorrow's Challenges</h2>
-                <p>LogicLink Solutions delivers cutting-edge software development services to transform your business and drive digital innovation.</p>
+                <h2>Innovative Software Solutions</h2>
+                <p>LogicLink delivers cutting-edge software to transform your business and drive digital innovation.</p>
                 <a href="#services" class="btn">Explore Our Services</a>
             </div>
         </div>
-        <div class="hero-bg"></div>
     </section>
 
     <!-- Services Section -->
@@ -652,50 +736,36 @@
         <div class="container">
             <div class="section-title">
                 <h2>Our Services</h2>
-                <p>Comprehensive software solutions tailored to your business needs</p>
+                <p>Software solutions tailored to your needs</p>
             </div>
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-laptop-code"></i>
                     </div>
-                    <h3>Custom Software Development</h3>
-                    <p>Tailored software solutions designed to address your specific business challenges and requirements.</p>
+                    <h3>Custom Software</h3>
+                    <p>Tailored solutions designed to address your specific business challenges.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3>Mobile App Development</h3>
-                    <p>Native and cross-platform mobile applications that deliver exceptional user experiences.</p>
+                    <h3>Mobile Apps</h3>
+                    <p>Native and cross-platform apps that deliver exceptional experiences.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-globe"></i>
                     </div>
                     <h3>Web Development</h3>
-                    <p>Modern, responsive websites and web applications built with cutting-edge technologies.</p>
+                    <p>Modern, responsive websites built with cutting-edge technologies.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-cloud"></i>
                     </div>
                     <h3>Cloud Solutions</h3>
-                    <p>Scalable cloud infrastructure and migration services to optimize your business operations.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Database Management</h3>
-                    <p>Efficient database design, optimization, and management for improved performance.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Cybersecurity</h3>
-                    <p>Comprehensive security solutions to protect your software and data from evolving threats.</p>
+                    <p>Scalable infrastructure to optimize your business operations.</p>
                 </div>
             </div>
             
@@ -703,25 +773,25 @@
                 <div class="stats-grid">
                     <div class="stat-item">
                         <div class="stat-number">20+</div>
-                        <div class="stat-text">Projects Completed</div>
+                        <div class="stat-text">Projects</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">15+</div>
-                        <div class="stat-text">Satisfied Clients</div>
+                        <div class="stat-text">Clients</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">3+</div>
-                        <div class="stat-text">Years Experience</div>
+                        <div class="stat-text">Years</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">10+</div>
-                        <div class="stat-text">Expert Developers</div>
+                        <div class="stat-text">Experts</div>
                     </div>
                 </div>
             </div>
             
-            <div class="section-title" style="margin-top: 4rem;">
-                <h3>Technologies We Work With</h3>
+            <div class="section-title" style="margin-top: 3rem;">
+                <h3>Our Tech Stack</h3>
             </div>
             <div class="tech-stack">
                 <div class="tech-item">
@@ -765,15 +835,19 @@
         <div class="container">
             <div class="section-title">
                 <h2>About Us</h2>
-                <p>Learn more about LogicLink Solutions</p>
+                <p>Learn more about LogicLink</p>
             </div>
             <div class="about-content">
+                <div class="about-image">
+                    <div class="about-image-container">
+                        <img src="/api/placeholder/400/250" alt="LogicLink Team" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </div>
                 <div class="about-text">
-                    <h3>Driving Digital Transformation</h3>
-                    <p>At LogicLink Solutions, we are passionate about leveraging technology to solve complex business challenges. Founded in 2018, we've grown into a team of dedicated professionals committed to delivering exceptional software solutions.</p>
-                    <p>Our mission is to empower businesses through innovative technology solutions that drive growth, improve efficiency, and create competitive advantages in an increasingly digital world.</p>
-                    <p>With a team of experienced developers, designers, and consultants, we bring a wealth of expertise across various industries and technologies to every project we undertake.</p>
-                    <a href="#contact" class="btn" style="margin-top: 20px;">Get to Know Us</a>
+                    <h3>Digital Transformation</h3>
+                    <p>At LogicLink Solutions, we leverage technology to solve complex business challenges. Founded in 2018, we've grown into a team of dedicated professionals committed to delivering exceptional software solutions.</p>
+                    <p>Our mission is to empower businesses through innovative technology that drives growth and creates competitive advantages.</p>
+                    <a href="#contact" class="btn" style="margin-top: 15px;">Get to Know Us</a>
                     
                     <div class="code-section">
                         <div class="code-dots">
@@ -782,33 +856,17 @@
                             <span class="dot dot-green"></span>
                         </div>
                         <div class="code-content">
-                            <span class="comment">// Our approach to software development</span><br>
-                            <span class="keyword">function</span> <span class="function">logiclinkSolution</span>(<span class="variable">clientRequirements</span>) {<br>
-                            &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">team</span> = <span class="function">assembleExpertTeam</span>(<span class="variable">clientRequirements</span>);<br>
-                            &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">strategy</span> = <span class="function">developCustomStrategy</span>(<span class="variable">clientRequirements</span>);<br>
-                            <br>
-                            &nbsp;&nbsp;<span class="comment">// Agile development process</span><br>
-                            &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">solution</span> = <span class="function">implementAgileMethodology</span>({<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;planning: <span class="function">thoroughRequirementsAnalysis</span>(),<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;development: <span class="function">cuttingEdgeTechnologyStack</span>(),<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;testing: <span class="function">comprehensiveQualityAssurance</span>(),<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;deployment: <span class="function">seamlessIntegration</span>(),<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;maintenance: <span class="function">ongoingSupport</span>()<br>
-                            &nbsp;&nbsp;});<br>
+                            <span class="comment">// Our approach</span><br>
+                            <span class="keyword">function</span> <span class="function">solution</span>(<span class="variable">reqs</span>) {<br>
+                            &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">team</span> = <span class="function">experts</span>();<br>
+                            &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">strategy</span> = <span class="function">custom</span>();<br>
                             <br>
                             &nbsp;&nbsp;<span class="keyword">return</span> {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;customSoftware: <span class="variable">solution</span>,<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;clientSatisfaction: <span class="string">"100%"</span>,<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;deliveredOnTime: <span class="keyword">true</span>,<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;support: <span class="string">"24/7"</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;software: <span class="string">"custom"</span>,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;satisfaction: <span class="string">"100%"</span>,<br>
                             &nbsp;&nbsp;};<br>
                             }
                         </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="about-image-container">
-                        <img src="C:\Users\PC\Desktop\BUSINESS STUFF\luca-bravo-XJXWbfSo2f0-unsplash.jpg" alt="LogicLink Team" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
             </div>
@@ -820,38 +878,38 @@
         <div class="container">
             <div class="section-title">
                 <h2>Our Portfolio</h2>
-                <p>Explore our recent projects</p>
+                <p>Recent projects we're proud of</p>
             </div>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
                     <img src="andras-vas-Bd7gNnWJBkU-unsplash.jpg" alt="E-Commerce Platform" style="width: 100%; height: 100%; object-fit: cover;">
                     <div class="portfolio-overlay">
                         <h3>X-fit Web App</h3>
-                        <p>A scalable gym app solution with integrated payment systems.</p>
-                        <a href="https://xfit-ochre.vercel.app/" class="portfolio-link">View Project</a>
+                        <p>A scalable gym app with integrated payments.</p>
+                        <a href="#">View Project</a>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <img src="adi-goldstein-EUsVwEOsblE-unsplash.jpg" alt="Financial Analytics Dashboard" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="markus-spiske-1LLh8k2_YFk-unsplash.jpg" alt="Financial Dashboard" style="width: 100%; height: 100%; object-fit: cover;">
                     <div class="portfolio-overlay">
-                        <h3>Financial Analytics Dashboard</h3>
-                        <p>Real-time data visualization platform for financial institutions.</p>
-                        <a href="#" class="portfolio-link">View Project</a>
+                        <h3>Financial Dashboard</h3>
+                        <p>Real-time data visualization platform.</p>
+                        <a href="#">View Project</a>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <img src="marvin-meyer-SYTO3xs06fU-unsplash.jpg" alt="Supply Chain Management System" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="luke-chesser-JKUTrJ4vK00-unsplash.jpg" alt="Supply Chain System" style="width: 100%; height: 100%; object-fit: cover;">
                     <div class="portfolio-overlay">
-                        <h3>Supply Chain Management System</h3>
-                        <p>End-to-end logistics tracking and management solution.</p>
-                        <a href="#" class="portfolio-link">View Project</a>
+                        <h3>Supply Chain System</h3>
+                        <p>End-to-end logistics tracking solution.</p>
+                        <a href="#">View Project</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-  
+    
 
     <!-- Contact Section -->
     <section id="contact">
@@ -885,7 +943,7 @@
                         </div>
                         <div>
                             <h4>Address</h4>
-                            <p>123 Tech Street, Silicon Valley, CA</p>
+                            <p>Chandra Layout 2nd stage ,Banglore,560040</p>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -894,7 +952,7 @@
                         </div>
                         <div>
                             <h4>Phone</h4>
-                            <p>+1 (123) 456-7890</p>
+                            <p>+91 7569672112</p>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -903,7 +961,7 @@
                         </div>
                         <div>
                             <h4>Email</h4>
-                            <p>info@logiclink.com</p>
+                            <p>contact.logiclinksolutions@gmail.com</p>
                         </div>
                     </div>
                 </div>
