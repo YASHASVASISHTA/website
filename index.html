@@ -3,1005 +3,928 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LogicLink Solutions - Innovative Software Solutions</title>
+    <title>Portfolio Builder</title>
     <style>
-        :root {
-            --primary: #6e42ff;
-            --secondary: #00c2ff;
-            --dark-bg: #121212;
-            --darker-bg: #0a0a0a;
-            --card-bg: #1e1e1e;
-            --text: #f5f5f5;
-            --text-secondary: #b3b3b3;
-        }
-        
+        /* CSS Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background-color: var(--dark-bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        header {
-            background-color: var(--darker-bg);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-        
-        .container {
-            width: 92%;
-            margin: 0 auto;
-            padding: 0 10px;
-        }
-        
-        nav {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
         }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo h1 {
-            margin-left: 5px;
-            font-weight: 700;
-            font-size: 1.3rem;
-        }
-        
-        .logo span {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .nav-links {
-            display: none;
-            list-style: none;
-        }
-        
-        .mobile-menu-btn {
-            cursor: pointer;
-            display: block;
-            z-index: 200;
-            background: none;
-            border: none;
-            color: var(--text);
-            font-size: 1.5rem;
-        }
-        
-        .mobile-nav {
-            position: fixed;
-            top: 0;
-            left: -100%;
-            width: 80%;
-            height: 100vh;
-            background-color: var(--darker-bg);
-            padding-top: 80px;
-            transition: left 0.3s ease;
-            z-index: 100;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
-        }
-        
-        .mobile-nav.active {
-            left: 0;
-        }
-        
-        .mobile-nav-links {
-            list-style: none;
-        }
-        
-        .mobile-nav-links li {
-            margin: 1.5rem 0;
-            padding: 0 2rem;
-        }
-        
-        .mobile-nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-size: 1.2rem;
-            display: block;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 90;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-        }
-        
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 0.7rem 1.2rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+
+        .sidebar {
+            width: 15%;
+            min-width: 200px; /* Minimum width to prevent becoming too narrow */
+            background-color: #2c3e50;
             color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s;
+            padding: 20px 0;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
         }
-        
-        .desktop-btn {
-            display: none;
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #34495e;
+            margin-bottom: 20px;
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(110, 66, 255, 0.4);
-        }
-        
-        .hero {
-            position: relative;
-            height: 90vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(rgba(10, 10, 10, 0.8), rgba(18, 18, 18, 0.9)), url('https://source.unsplash.com/1200x800/?technology,software') center/cover no-repeat;
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            padding: 0 20px;
-        }
-        
-        .hero h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            color: var(--text-secondary);
-        }
-        
-        section {
-            padding: 3rem 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-        
-        .section-title h2 {
-            font-size: 2rem;
-            margin-bottom: 0.8rem;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-        }
-        
-        .section-title p {
-            color: var(--text-secondary);
-        }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-        
-        .service-card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 1.5rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(30, 30, 30, 0.9), rgba(30, 30, 30, 0.95)), url('https://source.unsplash.com/400x300/?software,technology') center/cover no-repeat;
-            z-index: -1;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .service-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-        
-        .service-card h3 {
+
+        .sidebar h2 {
             font-size: 1.3rem;
-            margin-bottom: 0.8rem;
+            margin-bottom: 10px;
         }
-        
-        .service-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
+
+        .nav-menu {
+            list-style: none;
         }
-        
-        .stats-container {
-            background-color: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-top: 3rem;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+        .nav-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
         }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            text-align: center;
+
+        .nav-item:hover {
+            background-color: #34495e;
         }
-        
-        .stat-item {
-            padding: 1rem;
+
+        .nav-item.active {
+            background-color: #3498db;
         }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+
+        .nav-item i {
+            margin-right: 10px;
+            font-size: 1.1rem;
         }
-        
-        .stat-text {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+
+        .content {
+            margin-left: 15%;
+            padding: 30px;
+            width: 85%;
         }
-        
-        .tech-stack {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        .tech-item {
-            background-color: var(--card-bg);
-            padding: 0.8rem 0.4rem;
+
+        .section {
+            display: none;
+            background: white;
+            padding: 30px;
             border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.3s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        
-        .tech-item:hover {
-            transform: translateY(-5px);
+
+        .section.active {
+            display: block;
         }
-        
-        .tech-icon {
-            font-size: 1.8rem;
-            margin-bottom: 0.6rem;
+
+        .section h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
         }
-        
-        .tech-name {
-            text-align: center;
-            font-size: 0.7rem;
-        }
-        
-        .about-content {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-        
-        .about-text h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .about-text p {
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-        }
-        
-        .code-section {
-            position: relative;
-            padding: 1.5rem;
-            border-radius: 10px;
-            background-color: var(--card-bg);
-            margin-top: 2rem;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .code-dots {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 0.8rem;
-        }
-        
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-        
-        .dot-red {
-            background-color: #ff5f57;
-        }
-        
-        .dot-yellow {
-            background-color: #febc2e;
-        }
-        
-        .dot-green {
-            background-color: #28c840;
-        }
-        
-        .code-content {
-            background-color: #1a1a1a;
-            padding: 1.2rem;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            line-height: 1.5;
-            overflow-x: auto;
-            font-size: 0.8rem;
-        }
-        
-        .code-content .comment {
-            color: #6a9955;
-        }
-        
-        .code-content .keyword {
-            color: #569cd6;
-        }
-        
-        .code-content .string {
-            color: #ce9178;
-        }
-        
-        .code-content .function {
-            color: #dcdcaa;
-        }
-        
-        .code-content .variable {
-            color: #9cdcfe;
-        }
-        
-        .about-image-container {
-            width: 100%;
-            height: 250px;
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-        
-        .portfolio-item {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            height: 220px;
-            background-color: var(--card-bg);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .portfolio-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1.2rem;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
-            transform: translateY(0);
-        }
-        
-        .portfolio-overlay h3 {
-            margin-bottom: 0.4rem;
-            font-size: 1.2rem;
-        }
-        
-        .portfolio-overlay p {
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-        }
-        
-        .portfolio-overlay a {
-            color: var(--secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        
-        .testimonials {
-            padding: 3rem 0;
-            background: linear-gradient(rgba(18, 18, 18, 0.97), rgba(18, 18, 18, 0.97)), url('https://source.unsplash.com/1200x800/?technology,software') center/cover no-repeat;
-        }
-        
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-        
-        .testimonial-card {
-            background-color: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .testimonial-text {
-            margin-bottom: 1.2rem;
-            font-style: italic;
-            position: relative;
-            padding-left: 1.8rem;
-            font-size: 0.95rem;
-        }
-        
-        .testimonial-text::before {
-            content: '"';
-            position: absolute;
-            left: 0;
-            top: -8px;
-            font-size: 2.5rem;
-            color: var(--primary);
-            font-family: Georgia, serif;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-        }
-        
-        .author-image {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 1rem;
-            overflow: hidden;
-        }
-        
-        .author-info h4 {
-            margin-bottom: 0.2rem;
-            font-size: 1rem;
-        }
-        
-        .author-info p {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-        }
-        
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-        
-        .contact-form {
-            background-color: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
+
         .form-group {
-            margin-bottom: 1.2rem;
+            margin-bottom: 20px;
         }
-        
+
         .form-group label {
             display: block;
-            margin-bottom: 0.4rem;
-            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
         }
-        
-        .form-group input,
-        .form-group textarea {
+
+        .form-control {
             width: 100%;
-            padding: 0.8rem;
-            background-color: var(--dark-bg);
-            border: 1px solid #333;
-            color: var(--text);
-            border-radius: 5px;
-            font-size: 0.9rem;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
         }
-        
-        .form-group textarea {
-            height: 120px;
+
+        textarea.form-control {
+            min-height: 100px;
             resize: vertical;
         }
-        
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .contact-item {
+
+        .file-upload {
             display: flex;
             align-items: center;
-            margin-bottom: 1.2rem;
+            margin-top: 10px;
         }
-        
-        .contact-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload-label {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .file-upload-label:hover {
+            background-color: #2980b9;
+        }
+
+        .file-name {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-save-all {
+            background-color: #2ecc71;
+            margin-top: 20px;
+        }
+
+        .btn-save-all:hover {
+            background-color: #27ae60;
+        }
+
+        .project-item, .service-item, .certificate-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+        }
+
+        .item-header {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            margin-right: 0.8rem;
-            font-size: 0.9rem;
+            justify-content: space-between;
+            margin-bottom: 10px;
         }
-        
-        .contact-item h4 {
-            margin-bottom: 0.2rem;
-            font-size: 1rem;
+
+        .item-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #e74c3c;
+            margin-left: 10px;
         }
-        
-        .contact-item p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+
+        .preview-image {
+            max-width: 100px;
+            max-height: 100px;
+            margin-top: 10px;
+            display: block;
         }
-        
-        footer {
-            background-color: var(--darker-bg);
-            padding: 2.5rem 0 1.5rem;
-            background: linear-gradient(rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.98)), url('https://source.unsplash.com/1200x400/?technology,software') center/cover no-repeat;
+
+        /* Status message */
+        .status-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            display: none;
         }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            display: block;
         }
-        
-        .footer-col h4 {
-            margin-bottom: 1.2rem;
-            font-size: 1.1rem;
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            display: block;
         }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 0.7rem;
-        }
-        
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-            font-size: 0.9rem;
-        }
-        
-        .footer-links a:hover {
-            color: var(--secondary);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 0.8rem;
-        }
-        
-        .social-links a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 36px;
-            height: 36px;
-            background-color: var(--card-bg);
-            border-radius: 50%;
-            color: var(--text);
-            text-decoration: none;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-        
-        .social-links a:hover {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            transform: translateY(-3px);
-        }
-        
-        .copyright {
-            margin-top: 2rem;
-            text-align: center;
-            color: var(--text-secondary);
-            padding-top: 1.2rem;
-            border-top: 1px solid #333;
-            font-size: 0.8rem;
-        }
-        
-        /* For larger mobile screens and tablets */
-        @media (min-width: 480px) {
-            .services-grid {
-                grid-template-columns: repeat(2, 1fr);
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
             }
-            
-            .tech-stack {
-                grid-template-columns: repeat(4, 1fr);
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
             }
-            
-            .portfolio-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .content {
+                width: 100%;
+                margin-left: 0;
             }
-            
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        /* For desktop screens - hiding these styles intentionally */
-        @media (min-width: 992px) {
-            /* Desktop styles are intentionally removed since we're focusing on mobile */
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <h1><span>LogicLink</span> Solutions</h1>
-                </div>
-                <button class="mobile-menu-btn" id="menuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <a href="#contact" class="btn desktop-btn">Get in Touch</a>
-            </nav>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Portfolio Builder</h2>
         </div>
-    </header>
-
-    <!-- Mobile Navigation -->
-    <div class="mobile-nav" id="mobileNav">
-        <ul class="mobile-nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#contact" class="btn">Get in Touch</a></li>
+        <ul class="nav-menu">
+            <li class="nav-item active" data-section="basic-info">
+                <i>👤</i> Basic Info
+            </li>
+            <li class="nav-item" data-section="projects">
+                <i>💼</i> Projects
+            </li>
+            <li class="nav-item" data-section="services">
+                <i>🛠️</i> Services
+            </li>
+            <li class="nav-item" data-section="certificates">
+                <i>🏆</i> Certificates
+            </li>
+            <li class="nav-item" data-section="contact-info">
+                <i>📧</i> Contact Info
+            </li>
         </ul>
     </div>
-    <div class="overlay" id="overlay"></div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h2>Innovative Software Solutions</h2>
-                <p>LogicLink delivers cutting-edge software to transform your business and drive digital innovation.</p>
-                <a href="#services" class="btn">Explore Our Services</a>
-            </div>
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Basic Info Section -->
+        <div class="section active" id="basic-info">
+            <h2>Basic Information</h2>
+            <form id="basicInfoForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="profession">Profession</label>
+                    <input type="text" class="form-control" id="profession" required>
+                </div>
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea class="form-control" id="bio" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Profile Image</label>
+                    <div class="file-upload">
+                        <label for="profileImage" class="file-upload-label">Choose File</label>
+                        <input type="file" id="profileImage" accept="image/*">
+                        <span class="file-name" id="profileImageName">No file chosen</span>
+                    </div>
+                    <img id="profileImagePreview" class="preview-image" style="display: none;">
+                </div>
+                <div class="form-group">
+                    <label>Resume (PDF)</label>
+                    <div class="file-upload">
+                        <label for="resume" class="file-upload-label">Choose File</label>
+                        <input type="file" id="resume" accept=".pdf">
+                        <span class="file-name" id="resumeName">No file chosen</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Save</button>
+            </form>
+            <div id="basicInfoStatus" class="status-message"></div>
         </div>
-    </section>
 
-    <!-- Services Section -->
-    <section id="services">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Services</h2>
-                <p>Software solutions tailored to your needs</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-laptop-code"></i>
+        <!-- Projects Section -->
+        <div class="section" id="projects">
+            <h2>Projects</h2>
+            <form id="projectForm">
+                <div class="form-group">
+                    <label for="projectTitle">Project Title</label>
+                    <input type="text" class="form-control" id="projectTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="projectDescription">Description</label>
+                    <textarea class="form-control" id="projectDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="projectLink">Project Link (URL)</label>
+                    <input type="url" class="form-control" id="projectLink">
+                </div>
+                <div class="form-group">
+                    <label for="projectTechnologies">Technologies (comma separated)</label>
+                    <input type="text" class="form-control" id="projectTechnologies">
+                </div>
+                <div class="form-group">
+                    <label>Project Image</label>
+                    <div class="file-upload">
+                        <label for="projectImage" class="file-upload-label">Choose File</label>
+                        <input type="file" id="projectImage" accept="image/*">
+                        <span class="file-name" id="projectImageName">No file chosen</span>
                     </div>
-                    <h3>Custom Software</h3>
-                    <p>Tailored solutions designed to address your specific business challenges.</p>
+                    <img id="projectImagePreview" class="preview-image" style="display: none;">
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Mobile Apps</h3>
-                    <p>Native and cross-platform apps that deliver exceptional experiences.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3>Web Development</h3>
-                    <p>Modern, responsive websites built with cutting-edge technologies.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <h3>Cloud Solutions</h3>
-                    <p>Scalable infrastructure to optimize your business operations.</p>
-                </div>
-            </div>
-            
-            <div class="stats-container">
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number">20+</div>
-                        <div class="stat-text">Projects</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">15+</div>
-                        <div class="stat-text">Clients</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">3+</div>
-                        <div class="stat-text">Years</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">10+</div>
-                        <div class="stat-text">Experts</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="section-title" style="margin-top: 3rem;">
-                <h3>Our Tech Stack</h3>
-            </div>
-            <div class="tech-stack">
-                <div class="tech-item">
-                    <i class="fab fa-react tech-icon" style="color: #61DBFB;"></i>
-                    <div class="tech-name">React</div>
-                </div>
-                <div class="tech-item">
-                    <i class="fab fa-node tech-icon" style="color: #3C873A;"></i>
-                    <div class="tech-name">Node.js</div>
-                </div>
-                <div class="tech-item">
-                    <i class="fab fa-angular tech-icon" style="color: #DD0031;"></i>
-                    <div class="tech-name">Angular</div>
-                </div>
-                <div class="tech-item">
-                    <i class="fab fa-vuejs tech-icon" style="color: #41B883;"></i>
-                    <div class="tech-name">Vue.js</div>
-                </div>
-                <div class="tech-item">
-                    <i class="fab fa-python tech-icon" style="color: #306998;"></i>
-                    <div class="tech-name">Python</div>
-                </div>
-                <div class="tech-item">
-                    <i class="fab fa-java tech-icon" style="color: #f89820;"></i>
-                    <div class="tech-name">Java</div>
-                </div>
-                <div class="tech-item">
-                    <i class="fab fa-swift tech-icon" style="color: #F05138;"></i>
-                    <div class="tech-name">Swift</div>
-                </div>
-                <div class="tech-item">
-                    <i class="fab fa-android tech-icon" style="color: #3DDC84;"></i>
-                    <div class="tech-name">Android</div>
-                </div>
-            </div>
+                <button type="submit" class="btn">Add Project</button>
+            </form>
+            <div id="projectsList" style="margin-top: 30px;"></div>
+            <div id="projectsStatus" class="status-message"></div>
         </div>
-    </section>
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Us</h2>
-                <p>Learn more about LogicLink</p>
-            </div>
-            <div class="about-content">
-                <div class="about-image">
-                    <div class="about-image-container">
-                        <img src="/api/placeholder/400/250" alt="LogicLink Team" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
+        <!-- Services Section -->
+        <div class="section" id="services">
+            <h2>Services</h2>
+            <form id="serviceForm">
+                <div class="form-group">
+                    <label for="serviceName">Service Name</label>
+                    <input type="text" class="form-control" id="serviceName" required>
                 </div>
-                <div class="about-text">
-                    <h3>Digital Transformation</h3>
-                    <p>At LogicLink Solutions, we leverage technology to solve complex business challenges. Founded in 2018, we've grown into a team of dedicated professionals committed to delivering exceptional software solutions.</p>
-                    <p>Our mission is to empower businesses through innovative technology that drives growth and creates competitive advantages.</p>
-                    <a href="#contact" class="btn" style="margin-top: 15px;">Get to Know Us</a>
-                    
-                    <div class="code-section">
-                        <div class="code-dots">
-                            <span class="dot dot-red"></span>
-                            <span class="dot dot-yellow"></span>
-                            <span class="dot dot-green"></span>
-                        </div>
-                        <div class="code-content">
-                            <span class="comment">// Our approach</span><br>
-                            <span class="keyword">function</span> <span class="function">solution</span>(<span class="variable">reqs</span>) {<br>
-                            &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">team</span> = <span class="function">experts</span>();<br>
-                            &nbsp;&nbsp;<span class="keyword">const</span> <span class="variable">strategy</span> = <span class="function">custom</span>();<br>
-                            <br>
-                            &nbsp;&nbsp;<span class="keyword">return</span> {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;software: <span class="string">"custom"</span>,<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;satisfaction: <span class="string">"100%"</span>,<br>
-                            &nbsp;&nbsp;};<br>
-                            }
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="serviceDescription">Description</label>
+                    <textarea class="form-control" id="serviceDescription" required></textarea>
                 </div>
-            </div>
+                <div class="form-group">
+                    <label>Service Icon (Image)</label>
+                    <div class="file-upload">
+                        <label for="serviceIcon" class="file-upload-label">Choose File</label>
+                        <input type="file" id="serviceIcon" accept="image/*">
+                        <span class="file-name" id="serviceIconName">No file chosen</span>
+                    </div>
+                    <img id="serviceIconPreview" class="preview-image" style="display: none;">
+                </div>
+                <button type="submit" class="btn">Add Service</button>
+            </form>
+            <div id="servicesList" style="margin-top: 30px;"></div>
+            <div id="servicesStatus" class="status-message"></div>
         </div>
-    </section>
 
-    <!-- Portfolio Section -->
-<section id="portfolio">
-    <div class="container">
-        <div class="section-title">
-            <h2>Our Portfolio</h2>
-            <p>Recent projects we're proud of</p>
+        <!-- Certificates Section -->
+        <div class="section" id="certificates">
+            <h2>Certificates</h2>
+            <form id="certificateForm">
+                <div class="form-group">
+                    <label for="certificateName">Certificate Name</label>
+                    <input type="text" class="form-control" id="certificateName" required>
+                </div>
+                <div class="form-group">
+                    <label for="issuingOrg">Issuing Organization</label>
+                    <input type="text" class="form-control" id="issuingOrg" required>
+                </div>
+                <div class="form-group">
+                    <label for="issueDate">Issue Date</label>
+                    <input type="date" class="form-control" id="issueDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="credentialId">Credential ID</label>
+                    <input type="text" class="form-control" id="credentialId">
+                </div>
+                <div class="form-group">
+                    <label for="credentialUrl">Credential URL</label>
+                    <input type="url" class="form-control" id="credentialUrl">
+                </div>
+                <div class="form-group">
+                    <label>Certificate Image</label>
+                    <div class="file-upload">
+                        <label for="certificateImage" class="file-upload-label">Choose File</label>
+                        <input type="file" id="certificateImage" accept="image/*">
+                        <span class="file-name" id="certificateImageName">No file chosen</span>
+                    </div>
+                    <img id="certificateImagePreview" class="preview-image" style="display: none;">
+                </div>
+                <button type="submit" class="btn">Add Certificate</button>
+            </form>
+            <div id="certificatesList" style="margin-top: 30px;"></div>
+            <div id="certificatesStatus" class="status-message"></div>
         </div>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="andras-vas-Bd7gNnWJBkU-unsplash.jpg" alt="E-Commerce Platform" style="width: 100%; height: 100%; object-fit: cover;">
-                <div class="portfolio-overlay">
-                    <h3>X-fit Web App</h3>
-                    <p>A scalable gym app with integrated payments.</p>
-                    <a href="https://xfit-ochre.vercel.app/">View Project</a>
+
+        <!-- Contact Info Section -->
+        <div class="section" id="contact-info">
+            <h2>Contact Information</h2>
+            <form id="contactInfoForm">
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" class="form-control" id="contactEmail" required>
                 </div>
-            </div>
-            <div class="portfolio-item">
-                <img src="markus-spiske-1LLh8k2_YFk-unsplash.jpg" alt="Cafe Website" style="width: 100%; height: 100%; object-fit: cover;">
-                <div class="portfolio-overlay">
-                    <h3>Cafe Website</h3>
-                    <p>Modern cafe website with online ordering system</p>
-                    <a href="https://cafe-six-dusky.vercel.app/">View Project</a>
+                <div class="form-group">
+                    <label for="contactPhone">Phone</label>
+                    <input type="tel" class="form-control" id="contactPhone">
                 </div>
-            </div>
-            <div class="portfolio-item">
-                <img src="luke-chesser-JKUTrJ4vK00-unsplash.jpg" alt="Salon Website" style="width: 100%; height: 100%; object-fit: cover;">
-                <div class="portfolio-overlay">
-                    <h3>Salon Website</h3>
-                    <p>Elegant salon website with booking functionality</p>
-                    <a href="https://salon-gray.vercel.app/">View Project</a>
+                <div class="form-group">
+                    <label for="contactAddress">Address</label>
+                    <input type="text" class="form-control" id="contactAddress">
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="contactCity">City</label>
+                    <input type="text" class="form-control" id="contactCity">
+                </div>
+                <div class="form-group">
+                    <label for="contactCountry">Country</label>
+                    <input type="text" class="form-control" id="contactCountry">
+                </div>
+                <button type="submit" class="btn">Save</button>
+            </form>
+            <div id="contactInfoStatus" class="status-message"></div>
+        </div>
+
+        <!-- Save All Button -->
+        <div style="margin-top: 30px; text-align: center;">
+            <button id="saveAllBtn" class="btn btn-save-all">Save All to Database</button>
+            <div id="saveAllStatus" class="status-message"></div>
         </div>
     </div>
-</section>
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>Contact Us</h2>
-                <p>Get in touch with us for your next project</p>
-            </div>
-            <div class="contact-container">
-                <div class="contact-form">
-                    <form>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn">Send Message</button>
-                    </form>
-                </div>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h4>Address</h4>
-                            <p>Chandra Layout 2nd stage ,Banglore,560040</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div>
-                            <h4>Phone</h4>
-                            <p>+91 7569672112</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h4>Email</h4>
-                            <p>contact.logiclinksolutions@gmail.com</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-col">
-                    <h4>About Us</h4>
-                    <ul class="footer-links">
-                        <li><a href="#about">Our Story</a></li>
-                        <li><a href="#services">Our Services</a></li>
-                        <li><a href="#portfolio">Our Portfolio</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#portfolio">Portfolio</a></li>
-                        <li><a href="#testimonials">Testimonials</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Follow Us</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2023 LogicLink Solutions. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <!-- Import Firebase -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCUQOFSRiKK7Teey1_37b_VIMmCMND9v1c",
+            authDomain: "port-432ea.firebaseapp.com",
+            projectId: "port-432ea",
+            storageBucket: "port-432ea.appspot.com",
+            messagingSenderId: "947616899040",
+            appId: "1:947616899040:web:ac90aa46de65efa1a29585",
+            databaseURL: "https://port-432ea-default-rtdb.firebaseio.com/"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        
+        // Initialize Realtime Database
+        const database = getDatabase(app);
+
+        // JavaScript for the Portfolio Builder
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation between sections
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.section');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all nav items and sections
+                    navItems.forEach(navItem => navItem.classList.remove('active'));
+                    sections.forEach(section => section.classList.remove('active'));
+                    
+                    // Add active class to clicked nav item
+                    this.classList.add('active');
+                    
+                    // Show corresponding section
+                    const sectionId = this.getAttribute('data-section');
+                    document.getElementById(sectionId).classList.add('active');
+                });
+            });
+
+            // File upload handling
+            setupFileUpload('profileImage', 'profileImageName', 'profileImagePreview');
+            setupFileUpload('resume', 'resumeName');
+            setupFileUpload('projectImage', 'projectImageName', 'projectImagePreview');
+            setupFileUpload('serviceIcon', 'serviceIconName', 'serviceIconPreview');
+            setupFileUpload('certificateImage', 'certificateImageName', 'certificateImagePreview');
+
+            function setupFileUpload(inputId, fileNameId, previewId = null) {
+                const fileInput = document.getElementById(inputId);
+                const fileNameElement = document.getElementById(fileNameId);
+                
+                fileInput.addEventListener('change', function() {
+                    if (this.files.length > 0) {
+                        fileNameElement.textContent = this.files[0].name;
+                        
+                        // Show preview if it's an image and preview element is provided
+                        if (previewId && this.files[0].type.startsWith('image/')) {
+                            const previewElement = document.getElementById(previewId);
+                            const reader = new FileReader();
+                            
+                            reader.onload = function(e) {
+                                previewElement.src = e.target.result;
+                                previewElement.style.display = 'block';
+                            }
+                            
+                            reader.readAsDataURL(this.files[0]);
+                        }
+                    } else {
+                        fileNameElement.textContent = 'No file chosen';
+                        if (previewId) {
+                            document.getElementById(previewId).style.display = 'none';
+                        }
+                    }
+                });
+            }
+
+            // Form handling with Firebase integration
+            document.getElementById('basicInfoForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveBasicInfo();
+            });
+
+            document.getElementById('projectForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addProject();
+            });
+
+            document.getElementById('serviceForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addService();
+            });
+
+            document.getElementById('certificateForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addCertificate();
+            });
+
+            document.getElementById('contactInfoForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveContactInfo();
+            });
+
+            // Save All button
+            document.getElementById('saveAllBtn').addEventListener('click', function() {
+                saveAllData();
+            });
+
+            // Data arrays
+            let projects = [];
+            let services = [];
+            let certificates = [];
+
+            // Basic Info
+            let basicInfo = {};
+            let contactInfo = {};
+
+            function saveBasicInfo() {
+                basicInfo = {
+                    fullName: document.getElementById('fullName').value,
+                    profession: document.getElementById('profession').value,
+                    bio: document.getElementById('bio').value,
+                    profileImageName: document.getElementById('profileImage').files[0] ? document.getElementById('profileImage').files[0].name : null,
+                    resumeName: document.getElementById('resume').files[0] ? document.getElementById('resume').files[0].name : null,
+                    timestamp: new Date().toISOString()
+                };
+
+                const statusElement = document.getElementById('basicInfoStatus');
+                statusElement.textContent = "Saving basic information...";
+                statusElement.className = "status-message";
+
+                // Save to Firebase
+                set(ref(database, 'portfolio/basicInfo'), basicInfo)
+                    .then(() => {
+                        statusElement.textContent = "Basic information saved successfully!";
+                        statusElement.className = "status-message success";
+                    })
+                    .catch((error) => {
+                        statusElement.textContent = "Error saving basic information: " + error.message;
+                        statusElement.className = "status-message error";
+                    });
+            }
+
+            function saveContactInfo() {
+                contactInfo = {
+                    email: document.getElementById('contactEmail').value,
+                    phone: document.getElementById('contactPhone').value,
+                    address: document.getElementById('contactAddress').value,
+                    city: document.getElementById('contactCity').value,
+                    country: document.getElementById('contactCountry').value,
+                    timestamp: new Date().toISOString()
+                };
+
+                const statusElement = document.getElementById('contactInfoStatus');
+                statusElement.textContent = "Saving contact information...";
+                statusElement.className = "status-message";
+
+                // Save to Firebase
+                set(ref(database, 'portfolio/contactInfo'), contactInfo)
+                    .then(() => {
+                        statusElement.textContent = "Contact information saved successfully!";
+                        statusElement.className = "status-message success";
+                    })
+                    .catch((error) => {
+                        statusElement.textContent = "Error saving contact information: " + error.message;
+                        statusElement.className = "status-message error";
+                    });
+            }
+
+            function addProject() {
+                const title = document.getElementById('projectTitle').value;
+                const description = document.getElementById('projectDescription').value;
+                const link = document.getElementById('projectLink').value;
+                const technologies = document.getElementById('projectTechnologies').value.split(',').map(t => t.trim());
+                const imageFile = document.getElementById('projectImage').files[0];
+                
+                const project = {
+                    id: Date.now(),
+                    title,
+                    description,
+                    link,
+                    technologies,
+                    imageName: imageFile ? imageFile.name : null,
+                    timestamp: new Date().toISOString()
+                };
+                
+                projects.push(project);
+                renderProjects();
+                
+                // Reset form
+                document.getElementById('projectForm').reset();
+                document.getElementById('projectImageName').textContent = 'No file chosen';
+                document.getElementById('projectImagePreview').style.display = 'none';
+            }
+
+            function saveProjects() {
+                const statusElement = document.getElementById('projectsStatus');
+                statusElement.textContent = "Saving projects...";
+                statusElement.className = "status-message";
+
+                // Save to Firebase
+                set(ref(database, 'portfolio/projects'), projects)
+                    .then(() => {
+                        statusElement.textContent = "Projects saved successfully!";
+                        statusElement.className = "status-message success";
+                    })
+                    .catch((error) => {
+                        statusElement.textContent = "Error saving projects: " + error.message;
+                        statusElement.className = "status-message error";
+                    });
+            }
+
+            function renderProjects() {
+                const projectsList = document.getElementById('projectsList');
+                projectsList.innerHTML = '';
+                
+                if (projects.length === 0) {
+                    projectsList.innerHTML = '<p>No projects added yet.</p>';
+                    return;
+                }
+                
+                projects.forEach(project => {
+                    const projectElement = document.createElement('div');
+                    projectElement.className = 'project-item';
+                    projectElement.innerHTML = `
+                        <div class="item-header">
+                            <h3>${project.title}</h3>
+                            <div class="item-actions">
+                                <button onclick="editProject(${project.id})">✏️</button>
+                                <button onclick="deleteProject(${project.id})">🗑️</button>
+                            </div>
+                        </div>
+                        <p>${project.description}</p>
+                        ${project.link ? `<p><a href="${project.link}" target="_blank">View Project</a></p>` : ''}
+                        ${project.technologies.length > 0 ? `<p><strong>Technologies:</strong> ${project.technologies.join(', ')}</p>` : ''}
+                        ${project.imageName ? `<p><strong>Image:</strong> ${project.imageName}</p>` : ''}
+                    `;
+                    projectsList.appendChild(projectElement);
+                });
+            }
+
+            function addService() {
+                const name = document.getElementById('serviceName').value;
+                const description = document.getElementById('serviceDescription').value;
+                const iconFile = document.getElementById('serviceIcon').files[0];
+                
+                const service = {
+                    id: Date.now(),
+                    name,
+                    description,
+                    iconName: iconFile ? iconFile.name : null,
+                    timestamp: new Date().toISOString()
+                };
+                
+                services.push(service);
+                renderServices();
+                
+                // Reset form
+                document.getElementById('serviceForm').reset();
+                document.getElementById('serviceIconName').textContent = 'No file chosen';
+                document.getElementById('serviceIconPreview').style.display = 'none';
+            }
+
+            function saveServices() {
+                const statusElement = document.getElementById('servicesStatus');
+                statusElement.textContent = "Saving services...";
+                statusClass = "status-message";
+
+                // Save to Firebase
+                set(ref(database, 'portfolio/services'), services)
+                    .then(() => {
+                        statusElement.textContent = "Services saved successfully!";
+                        statusElement.className = "status-message success";
+                    })
+                    .catch((error) => {
+                        statusElement.textContent = "Error saving services: " + error.message;
+                        statusElement.className = "status-message error";
+                    });
+            }
+
+            function renderServices() {
+                const servicesList = document.getElementById('servicesList');
+                servicesList.innerHTML = '';
+                
+                if (services.length === 0) {
+                    servicesList.innerHTML = '<p>No services added yet.</p>';
+                    return;
+                }
+                
+                services.forEach(service => {
+                    const serviceElement = document.createElement('div');
+                    serviceElement.className = 'service-item';
+                    serviceElement.innerHTML = `
+                        <div class="item-header">
+                            <h3>${service.name}</h3>
+                            <div class="item-actions">
+                                <button onclick="editService(${service.id})">✏️</button>
+                                <button onclick="deleteService(${service.id})">🗑️</button>
+                            </div>
+                        </div>
+                        <p>${service.description}</p>
+                        ${service.iconName ? `<p><strong>Icon:</strong> ${service.iconName}</p>` : ''}
+                    `;
+                    servicesList.appendChild(serviceElement);
+                });
+            }
+
+            function addCertificate() {
+                const name = document.getElementById('certificateName').value;
+                const issuingOrg = document.getElementById('issuingOrg').value;
+                const issueDate = document.getElementById('issueDate').value;
+                const credentialId = document.getElementById('credentialId').value;
+                const credentialUrl = document.getElementById('credentialUrl').value;
+                const imageFile = document.getElementById('certificateImage').files[0];
+                
+                const certificate = {
+                    id: Date.now(),
+                    name,
+                    issuingOrg,
+                    issueDate,
+                    credentialId,
+                    credentialUrl,
+                    imageName: imageFile ? imageFile.name : null,
+                    timestamp: new Date().toISOString()
+                };
+                
+                certificates.push(certificate);
+                renderCertificates();
+                
+                // Reset form
+                document.getElementById('certificateForm').reset();
+                document.getElementById('certificateImageName').textContent = 'No file chosen';
+                document.getElementById('certificateImagePreview').style.display = 'none';
+            }
+
+            function saveCertificates() {
+                const statusElement = document.getElementById('certificatesStatus');
+                statusElement.textContent = "Saving certificates...";
+                statusElement.className = "status-message";
+
+                // Save to Firebase
+                set(ref(database, 'portfolio/certificates'), certificates)
+                    .then(() => {
+                        statusElement.textContent = "Certificates saved successfully!";
+                        statusElement.className = "status-message success";
+                    })
+                    .catch((error) => {
+                        statusElement.textContent = "Error saving certificates: " + error.message;
+                        statusElement.className = "status-message error";
+                    });
+            }
+
+            function renderCertificates() {
+                const certificatesList = document.getElementById('certificatesList');
+                certificatesList.innerHTML = '';
+                
+                if (certificates.length === 0) {
+                    certificatesList.innerHTML = '<p>No certificates added yet.</p>';
+                    return;
+                }
+                
+                certificates.forEach(certificate => {
+                    const certificateElement = document.createElement('div');
+                    certificateElement.className = 'certificate-item';
+                    certificateElement.innerHTML = `
+                        <div class="item-header">
+                            <h3>${certificate.name}</h3>
+                            <div class="item-actions">
+                                <button onclick="editCertificate(${certificate.id})">✏️</button>
+                                <button onclick="deleteCertificate(${certificate.id})">🗑️</button>
+                            </div>
+                        </div>
+                        <p><strong>Issued by:</strong> ${certificate.issuingOrg}</p>
+                        <p><strong>Date:</strong> ${certificate.issueDate}</p>
+                        ${certificate.credentialId ? `<p><strong>Credential ID:</strong> ${certificate.credentialId}</p>` : ''}
+                        ${certificate.credentialUrl ? `<p><strong>URL:</strong> <a href="${certificate.credentialUrl}" target="_blank">View Certificate</a></p>` : ''}
+                        ${certificate.imageName ? `<p><strong>Image:</strong> ${certificate.imageName}</p>` : ''}
+                    `;
+                    certificatesList.appendChild(certificateElement);
+                });
+            }
+
+            function saveAllData() {
+                const statusElement = document.getElementById('saveAllStatus');
+                statusElement.textContent = "Saving all data to database...";
+                statusElement.className = "status-message";
+
+                // Create a portfolio object with all data
+                const portfolioData = {
+                    basicInfo: basicInfo,
+                    contactInfo: contactInfo,
+                    projects: projects,
+                    services: services,
+                    certificates: certificates,
+                    lastUpdated: new Date().toISOString()
+                };
+
+                // Save to Firebase
+                set(ref(database, 'portfolio'), portfolioData)
+                    .then(() => {
+                        statusElement.textContent = "All data saved successfully!";
+                        statusElement.className = "status-message success";
+                    })
+                    .catch((error) => {
+                        statusElement.textContent = "Error saving data: " + error.message;
+                        statusElement.className = "status-message error";
+                    });
+            }
+
+            // Make functions available globally for the buttons
+            window.editProject = function(id) {
+                const project = projects.find(p => p.id === id);
+                if (project) {
+                    document.getElementById('projectTitle').value = project.title;
+                    document.getElementById('projectDescription').value = project.description;
+                    document.getElementById('projectLink').value = project.link || '';
+                    document.getElementById('projectTechnologies').value = project.technologies.join(', ');
+                    
+                    // Scroll to projects section
+                    document.querySelector('.nav-item[data-section="projects"]').click();
+                    
+                    // Remove the project from the array
+                    projects = projects.filter(p => p.id !== id);
+                    renderProjects();
+                }
+            };
+
+            window.deleteProject = function(id) {
+                if (confirm('Are you sure you want to delete this project?')) {
+                    projects = projects.filter(project => project.id !== id);
+                    renderProjects();
+                }
+            };
+
+            window.editService = function(id) {
+                const service = services.find(s => s.id === id);
+                if (service) {
+                    document.getElementById('serviceName').value = service.name;
+                    document.getElementById('serviceDescription').value = service.description;
+                    
+                    // Scroll to services section
+                    document.querySelector('.nav-item[data-section="services"]').click();
+                    
+                    // Remove the service from the array
+                    services = services.filter(s => s.id !== id);
+                    renderServices();
+                }
+            };
+
+            window.deleteService = function(id) {
+                if (confirm('Are you sure you want to delete this service?')) {
+                    services = services.filter(service => service.id !== id);
+                    renderServices();
+                }
+            };
+
+            window.editCertificate = function(id) {
+                const certificate = certificates.find(c => c.id === id);
+                if (certificate) {
+                    document.getElementById('certificateName').value = certificate.name;
+                    document.getElementById('issuingOrg').value = certificate.issuingOrg;
+                    document.getElementById('issueDate').value = certificate.issueDate;
+                    document.getElementById('credentialId').value = certificate.credentialId || '';
+                    document.getElementById('credentialUrl').value = certificate.credentialUrl || '';
+                    
+                    // Scroll to certificates section
+                    document.querySelector('.nav-item[data-section="certificates"]').click();
+                    
+                    // Remove the certificate from the array
+                    certificates = certificates.filter(c => c.id !== id);
+                    renderCertificates();
+                }
+            };
+
+            window.deleteCertificate = function(id) {
+                if (confirm('Are you sure you want to delete this certificate?')) {
+                    certificates = certificates.filter(certificate => certificate.id !== id);
+                    renderCertificates();
+                }
+            };
+
+            // Initial render
+            renderProjects();
+            renderServices();
+            renderCertificates();
+        });
+    </script>
 </body>
 </html>
